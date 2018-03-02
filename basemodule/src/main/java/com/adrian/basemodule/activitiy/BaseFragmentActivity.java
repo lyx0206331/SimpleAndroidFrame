@@ -46,7 +46,7 @@ public class BaseFragmentActivity extends BaseActivity {
 
     @Override
     protected Object getLayoutRes() {
-        return 0;
+        return null;
     }
 
     @Override
