@@ -37,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mContext = this;
         ActivityManager.getInstance().addActivity(this);
         initVariables();
-        Object res = getLayoutResId();
+        Object res = getLayoutRes();
         if (res instanceof Integer && ((int) res) != 0) {
             setContentView((Integer) res);
         } else if (res instanceof View) {
@@ -72,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @return
      */
-    protected abstract Object getLayoutResId();
+    protected abstract Object getLayoutRes();
 
     @Override
     protected void onResume() {

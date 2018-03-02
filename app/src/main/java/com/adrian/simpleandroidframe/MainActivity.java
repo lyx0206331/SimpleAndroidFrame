@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected Object getLayoutResId() {
+    protected Object getLayoutRes() {
         return R.layout.activity_main;
     }
 }
