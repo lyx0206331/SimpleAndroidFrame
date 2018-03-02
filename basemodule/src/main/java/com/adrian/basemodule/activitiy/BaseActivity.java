@@ -37,7 +37,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         mContext = this;
         ActivityManager.getInstance().addActivity(this);
         initVariables();
-        setContentView(getLayoutResId());
+        Object res = getLayoutResId();
+        if (res instanceof Integer && ((int) res) != 0) {
+            setContentView((Integer) res);
+        } else if (res instanceof View) {
+            setContentView((View) res);
+        } else {
+            throw new RuntimeException("请传入正确的布局文件或控件");
+        }
+//        setContentView(getLayoutResId());
         // 初始化请求队列，传入的参数是请求并发值。
         mQueue = NoHttp.newRequestQueue(1);
         initViews();
@@ -64,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @return
      */
-    protected abstract int getLayoutResId();
+    protected abstract Object getLayoutResId();
 
     @Override
     protected void onResume() {
