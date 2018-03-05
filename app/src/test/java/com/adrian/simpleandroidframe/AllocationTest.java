@@ -26,6 +26,7 @@ public class AllocationTest {
 
     private void sendPair(Pair pair) {
         //处理pair
-        Log.e("UNIT_TEST", "result:" + pair.firstValue + "--" + pair.secondValue);
+//        Log.e("UNIT_TEST", "result:" + pair.firstValue + "--" + pair.secondValue);
+        System.out.println("result:" + pair.firstValue + "--" + pair.secondValue);
     }
 }
