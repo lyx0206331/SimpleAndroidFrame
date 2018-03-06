@@ -22,7 +22,7 @@ public final class Pair {
     /**
      * 只能用obtain()方法获取对象
      */
-    public Pair() {
+    private Pair() {
     }
 
     /**
