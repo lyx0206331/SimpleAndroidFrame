@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="radarPolygonColor">#3F51B5</color>
+    <color name="radarLineColor">#303F9F</color>
+    <color name="radarTxtColor">#FF4081</color>
+    <color name="radarCircleColor">#aa2452</color>
+    <color name="radarRegionColor">#f3f9f08f</color>
+</resources>
