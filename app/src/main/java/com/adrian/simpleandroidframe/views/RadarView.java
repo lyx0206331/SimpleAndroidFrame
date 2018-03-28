@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -85,6 +86,8 @@ public class RadarView extends View {
         super.onDraw(canvas);
         drawPolygon(canvas);
         drawLines(canvas);
+        drawText(canvas);
+        drawRegion(canvas);
     }
 
     public void setCount(int count) {
@@ -154,9 +157,68 @@ public class RadarView extends View {
         }
     }
 
+    /**
+     * 描绘文字
+     *
+     * @param canvas
+     */
     private void drawText(Canvas canvas) {
         for (int i = 0; i < count; i++) {
-
+            //获取雷达图最外边的坐标
+            float x = (float) (centerX + Math.sin(angle * i) * (radius + 12));
+            float y = (float) (centerY - Math.cos(angle * i) * (radius + 12));
+            if (angle * i == 0) {
+                //第一个文字位于顶角正上方
+                txtPaint.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText(titles[i], x, y - 18, txtPaint);
+                txtPaint.setTextAlign(Paint.Align.LEFT);
+            } else if (angle * i > 0 && angle * i < Math.PI / 2) {
+                //微调
+                canvas.drawText(titles[i], x + 18, y + 10, txtPaint);
+            } else if (angle * i >= Math.PI / 2 && angle * i < Math.PI) {
+                //最右下的文字获取到文字的长宽，按文字长度百分比向左移
+                String txt = titles[i];
+                Rect bounds = new Rect();
+                txtPaint.getTextBounds(txt, 0, txt.length(), bounds);
+                float height = bounds.bottom - bounds.top;
+                float width = txtPaint.measureText(txt);
+                canvas.drawText(txt, x - width * .4f, y + height + 18, txtPaint);
+            } else if (angle * i >= Math.PI && angle * i < 3 * Math.PI / 2) {
+                //同理最左下的文字获取到文字的长宽，按文字百分比向左移
+                String txt = titles[i];
+                Rect bounds = new Rect();
+                txtPaint.getTextBounds(txt, 0, txt.length(), bounds);
+                float width = txtPaint.measureText(txt);
+                float height = bounds.bottom - bounds.top;
+                canvas.drawText(txt, x - width * .6f, y + height + 18, txtPaint);
+            } else if (angle * i >= 3 * Math.PI / 2 && angle * i < 2 * Math.PI) {
+                //文字向左移动
+                String txt = titles[i];
+                float width = txtPaint.measureText(txt);
+                canvas.drawText(txt, x - width - 18, y + 10, txtPaint);
+            }
         }
+    }
+
+    /**
+     * 绘制覆盖区域
+     *
+     * @param canvas
+     */
+    private void drawRegion(Canvas canvas) {
+        Path path = new Path();
+        //每层的间距
+        float r = radius / layerCount;
+        for (int i = 0; i < count; i++) {
+            if (i == 0) {
+                path.moveTo(centerX, (float) (centerY - r - (radius - r) * percents[i]));
+            } else {
+                float x = (float) (centerX + Math.sin(angle * i) * (percents[i] * (radius - r) + r));
+                float y = (float) (centerY - Math.cos(angle * i) * (percents[i] * (radius - r) + r));
+                path.lineTo(x, y);
+            }
+        }
+        path.close();
+        canvas.drawPath(path, reginColorPaint);
     }
 }
