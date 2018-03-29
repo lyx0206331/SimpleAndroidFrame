@@ -90,14 +90,43 @@ public class RadarView extends View {
         drawRegion(canvas);
     }
 
+    /**
+     * 设置顶点数
+     *
+     * @param count
+     */
     public void setCount(int count) {
         this.count = count;
         angle = (float) (Math.PI * 2 / count);
         invalidate();
     }
 
+    /**
+     * 设置层数
+     * @param layerCount
+     */
     public void setLayerCount(int layerCount) {
         this.layerCount = layerCount;
+        invalidate();
+    }
+
+    /**
+     * 设置顶点名称
+     *
+     * @param titles
+     */
+    public void setTitles(String[] titles) {
+        this.titles = titles;
+        invalidate();
+    }
+
+    /**
+     * 设置顶点百分比
+     *
+     * @param percents
+     */
+    public void setPercents(double[] percents) {
+        this.percents = percents;
         invalidate();
     }
 
@@ -163,6 +192,9 @@ public class RadarView extends View {
      * @param canvas
      */
     private void drawText(Canvas canvas) {
+        if (titles == null || titles.length != count) {
+            return;
+        }
         for (int i = 0; i < count; i++) {
             //获取雷达图最外边的坐标
             float x = (float) (centerX + Math.sin(angle * i) * (radius + 12));
@@ -206,6 +238,9 @@ public class RadarView extends View {
      * @param canvas
      */
     private void drawRegion(Canvas canvas) {
+        if (percents == null || percents.length != count) {
+            return;
+        }
         Path path = new Path();
         //每层的间距
         float r = radius / layerCount;
