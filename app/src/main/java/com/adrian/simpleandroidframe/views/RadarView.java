@@ -244,15 +244,8 @@ public class RadarView extends View {
         Path path = new Path();
         //每层的间距
         float r = radius / layerCount;
-        for (int i = 0; i < count; i++) {
-            if (i == 0) {
-                path.moveTo(centerX, (float) (centerY - r - (radius - r) * percents[i]));
-            } else {
-                float x = (float) (centerX + Math.sin(angle * i) * (percents[i] * (radius - r) + r));
-                float y = (float) (centerY - Math.cos(angle * i) * (percents[i] * (radius - r) + r));
-                path.lineTo(x, y);
-            }
-        }
+        for (int i = 0; i < count; i++)
+
         path.close();
         canvas.drawPath(path, reginColorPaint);
     }
