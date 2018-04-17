@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        String[] urls = ShortUrlUtil.ShortText("http://www.baidu.com");
+        String[] urls = ShortUrlUtil.shortText("http://www.51bi.com/bbs/_t_278433840/");
         for (String url : urls) {
             Log.e("SHORT_URL", url);
 
