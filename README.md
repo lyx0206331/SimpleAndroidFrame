@@ -16,5 +16,5 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-		    compile 'com.github.lyx0206331:SimpleAndroidFrame:0.0.3'
+		    implementation 'com.github.lyx0206331:SimpleAndroidFrame:0.0.3'
 	}
